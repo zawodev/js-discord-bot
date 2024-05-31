@@ -11,5 +11,5 @@ if __name__ == '__main__':
     bot_thread.start()
 
     # start the control panel
-    app = BotControlApp(sys.argv, bot=bot)
+    app = BotControlApp(sys.argv, bot.get_bot())
     app.run()

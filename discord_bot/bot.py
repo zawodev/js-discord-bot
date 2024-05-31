@@ -35,6 +35,9 @@ class DiscordBot:
         # Process other messages if needed
         # await self.bot.process_commands(message) # Uncomment if you want to process commands
 
+    def get_bot(self):
+        return self.bot
+
     @app_commands.describe(custom_argument="put argument description here")
     async def test(self, ctx: discord.Interaction, custom_argument: str):
         await ctx.response.send_message("success")

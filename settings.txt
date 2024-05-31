@@ -1,2 +1,4 @@
-WELCOME_MESSAGE=a
-FAREWELL_MESSAGE=bb
+CHANNEL_NAME=general
+GOODBYE_MESSAGE=dowidzenia {name}
+WELCOME_MESSAGE=witaj {name}!
+check_for_links=false
