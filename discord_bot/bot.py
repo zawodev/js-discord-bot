@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import threading
 
 import discord
 from discord import app_commands
@@ -7,8 +8,9 @@ from discord.ext import commands
 
 
 class DiscordBot:
-    def __init__(self, command_prefix='!', intents=discord.Intents.all()):
+    def __init__(self, ready_event, command_prefix='/', intents=discord.Intents.all()):
         load_dotenv()
+        self.read_event = ready_event
         self.bot = commands.Bot(command_prefix=command_prefix, intents=intents)
         self.bot.event(self.on_ready)
         self.bot.event(self.on_message)
@@ -20,7 +22,7 @@ class DiscordBot:
                 await self.bot.load_extension(f'discord_bot.cogs.{filename[:-3]}')
 
     async def on_ready(self):
-        print(f'Logged in as {self.bot.user.name} - {self.bot.user.id}')
+        print(f'Logged in as {self.bot.user.name} ({self.bot.user.id})')
         await self.load_extensions()
         print(f'Loaded {len(self.bot.cogs)} cogs')
         try:
@@ -28,6 +30,13 @@ class DiscordBot:
             print(f"Synced {len(synced)} commands")
         except Exception as e:
             print(f"Failed to sync commands: {e}")
+
+        #guild = self.bot.guilds[0]
+        #member = guild.get_member(int('786525018740883456'))
+        #await member.send("Hello, I am a bot")
+        #await member.kick(reason="Testing")
+
+        self.read_event.set()
 
     async def on_message(self, message):
         if message.author == self.bot.user:
@@ -48,5 +57,6 @@ class DiscordBot:
 
 # if this module is run directly, create and run the bot
 if __name__ == "__main__":
-    bot_instance = DiscordBot()
+    ready_event = threading.Event()
+    bot_instance = DiscordBot(ready_event)
     bot_instance.run()
