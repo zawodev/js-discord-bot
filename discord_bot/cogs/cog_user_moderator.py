@@ -10,10 +10,15 @@ class UserModerator(commands.Cog):
         self.guild = bot.guilds[0]
         self.tree = bot.tree
         self.user_fetcher = bot.get_cog('UserFetcher')
+        self.reward_system = bot.get_cog('RewardSystem')
 
     async def ban_user(self, user_id, reason):
         print(f"banning user {user_id}")
-        user = self.guild.get_member(user_id)
+        user = self.guild.get_member(int(user_id))
+        self.reward_system.modify_user(int(user.id), {
+            'behaviour_points': -105.07,
+            'reward_points': 0
+        })
         if user:
             try:
                 await user.ban(reason=reason)
@@ -25,11 +30,17 @@ class UserModerator(commands.Cog):
             except Exception as e:
                 print(f"Error banning user {user_id}: {e}")
                 return False
-        return False
+        else:
+            print(f"User {user_id} not found.")
+            return False
 
     async def kick_user(self, user_id, reason):
         print(f"kicking user {user_id}")
-        user = self.guild.get_member(user_id)
+        user = self.guild.get_member(int(user_id))
+        self.reward_system.modify_user(int(user.id), {
+            'behaviour_points': -65.13,
+            'reward_points': 0
+        })
         if user:
             try:
                 await user.kick(reason=reason)
@@ -41,10 +52,17 @@ class UserModerator(commands.Cog):
             except Exception as e:
                 print(f"Error kicking user {user_id}: {e}")
                 return False
+        else:
+            print(f"User {user_id} not found.")
+            return False
 
     async def timeout_user(self, user_id, reason, duration):
         print(f"timing out user {user_id}")
-        user = self.guild.get_member(user_id)
+        user = self.guild.get_member(int(user_id))
+        self.reward_system.modify_user(int(user.id), {
+            'behaviour_points': -31.55,
+            'reward_points': 0
+        })
         if user:
             try:
                 until = datetime.datetime.now().astimezone() + datetime.timedelta(seconds=duration)
@@ -57,6 +75,9 @@ class UserModerator(commands.Cog):
             except Exception as e:
                 print(f"Error timing out user {user_id}: {e}")
                 return False
+        else:
+            print(f"User {user_id} not found.")
+            return False
 
 async def setup(bot):
     await bot.add_cog(UserModerator(bot))

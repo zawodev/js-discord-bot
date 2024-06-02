@@ -5,20 +5,8 @@ from PyQt5.QtGui import QPixmap, QImage
 import requests
 
 from control_app.timeout_dialog import TimeoutDialog
-
-
-def get_avatar_pixmap(url):
-    if not url:
-        return QPixmap("control_app/discordgrey.png").scaled(50, 50, Qt.KeepAspectRatio)
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            image = QImage()
-            image.loadFromData(response.content)
-            return QPixmap(image).scaled(50, 50, Qt.KeepAspectRatio)
-    except Exception as e:
-        print(f'error loading avatar: {e}')
-    return QPixmap("control_app/discordgrey.png").scaled(50, 50, Qt.KeepAspectRatio)
+from utils.url_to_pixmap import url_to_pixmap
+from utils.saving_loading_json import load_setting_json
 
 
 class UserModeratorTab(QWidget):
@@ -50,7 +38,7 @@ class UserModeratorTab(QWidget):
 
     # ------------------------------------ button click handlers ------------------------------------
     def handle_fetch_click(self):
-        self.guild_users = asyncio.run(self.user_fetcher.fetch_users())
+        self.guild_users = load_setting_json('user_data')
         self.display_users()
 
     def handle_ban_click(self, user_id):
@@ -71,15 +59,12 @@ class UserModeratorTab(QWidget):
 
     # ------------------------------------ button click asyncs ------------------------------------
     async def ban_user_async(self, user_id, reason):
-        print(f"banning user {user_id}")
         await self.moderator.ban_user(user_id, reason)
 
     async def kick_user_async(self, user_id, reason):
-        print(f"kicking user {user_id}")
         await self.moderator.kick_user(user_id, reason)
 
     async def timeout_user_async(self, user_id, reason, duration):
-        print(f"timing out user {user_id}")
         await self.moderator.timeout_user(user_id, reason, duration)
 
     # ------------------------------------ display users ---------------------------------
@@ -105,13 +90,13 @@ class UserModeratorTab(QWidget):
 
             # avatar
             avatar_label = QLabel()
-            avatar_pixmap = get_avatar_pixmap(user_info.get('avatar_url'))
+            avatar_pixmap = url_to_pixmap(user_info.get('avatar_url'), 50, 50)
             if avatar_pixmap:
                 avatar_label.setPixmap(avatar_pixmap)
             user_layout.addWidget(avatar_label)
 
             # username and id
-            user_label = QLabel(f"{user_info.get('username')} ({user_id})")
+            user_label = QLabel(f"{user_info.get('name')} ({user_id})")
             user_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             user_layout.addWidget(user_label, 1)  # Make the user label expand to take available space
 

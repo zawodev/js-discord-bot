@@ -1,23 +1,22 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QListWidget, QHBoxLayout, QCheckBox, QInputDialog, QMessageBox, QLineEdit
-from utils.banned_words import save_banned_words, load_banned_words
-from utils.settings import save_setting, load_setting
+from utils.saving_loading_json import save_setting_json, load_setting_json
 
 class BannedWordsTab(QWidget):
     def __init__(self):
         super().__init__()
 
-        # Load banned words from file
-        self.banned_words = load_banned_words()
+        # init first time
+        self.banned_words = []
+        self.link_checkbox = QCheckBox("Check For Links")
+        self.load_settings()
 
         # banned words
         title = QLabel("Banned Words:")
-        self.role_list = QListWidget()
-        self.role_list.addItems(self.banned_words)
+        self.word_list = QListWidget()
+        self.word_list.addItems(self.banned_words)
 
         # Check for links checkbox
-        self.link_checkbox = QCheckBox("Check For Links")
-        self.link_checkbox.setChecked(load_setting("check_for_links").lower() == "true")
-        self.link_checkbox.stateChanged.connect(lambda: save_setting("check_for_links", str(self.link_checkbox.isChecked()).lower()))
+        self.link_checkbox.stateChanged.connect(lambda: save_setting_json("banned_words_settings", {"check_for_links": str(self.link_checkbox.isChecked()).lower()}))
 
         # buttons
         add_role_button = QPushButton("Add word")
@@ -38,39 +37,48 @@ class BannedWordsTab(QWidget):
         # layout
         layout = QVBoxLayout()
         layout.addWidget(title)
-        layout.addWidget(self.role_list)
+        layout.addWidget(self.word_list)
         layout.addWidget(self.link_checkbox)
         layout.addLayout(button_layout)
 
         self.setLayout(layout)
 
+    def load_settings(self):
+        try:
+            settings = load_setting_json('banned_words_settings')
+            self.link_checkbox.setChecked(settings['check_for_links'].lower() == "true")
+            banned_words_list = load_setting_json('banned_words')
+            self.banned_words = banned_words_list
+        except Exception as e:
+            print(f'Failed to load settings: {e}')
+
     def add_word(self):
         text, ok = QInputDialog.getText(self, 'Add word', 'Enter a word:')
         if ok and text:
             if not self.word_exists(text):
-                self.role_list.addItem(text)
+                self.word_list.addItem(text)
                 self.banned_words.append(text)
                 self.save_banned_words()
             else:
                 self.show_message("Error", "This word already exists!")
 
     def remove_word(self):
-        list_items = self.role_list.selectedItems()
+        list_items = self.word_list.selectedItems()
         if not list_items: return
         for item in list_items:
-            self.role_list.takeItem(self.role_list.row(item))
+            self.word_list.takeItem(self.word_list.row(item))
             self.banned_words.remove(item.text())
         self.save_banned_words()
 
     def modify_word(self):
-        list_items = self.role_list.selectedItems()
+        list_items = self.word_list.selectedItems()
         if not list_items: return
         item = list_items[0]
         text, ok = QInputDialog.getText(self, 'Modify word', 'Modify word:', QLineEdit.Normal, item.text())
         if ok and text:
             if not self.word_exists(text) or text == item.text():
                 item.setText(text)
-                self.banned_words[self.role_list.row(item)] = text
+                self.banned_words[self.word_list.row(item)] = text
                 self.save_banned_words()
             else:
                 self.show_message("Error", "This word already exists!")
@@ -79,7 +87,7 @@ class BannedWordsTab(QWidget):
         return word in self.banned_words
 
     def save_banned_words(self):
-        save_banned_words(self.banned_words)
+        save_setting_json('banned_words', self.banned_words)
 
     def show_message(self, title, message):
         msg_box = QMessageBox()

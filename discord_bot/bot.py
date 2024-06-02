@@ -10,7 +10,7 @@ from discord.ext import commands
 class DiscordBot:
     def __init__(self, ready_event, command_prefix='/', intents=discord.Intents.all()):
         load_dotenv()
-        self.read_event = ready_event
+        self.ready_event = ready_event
         self.bot = commands.Bot(command_prefix=command_prefix, intents=intents)
         self.bot.event(self.on_ready)
         self.bot.event(self.on_message)
@@ -25,18 +25,13 @@ class DiscordBot:
         print(f'Logged in as {self.bot.user.name} ({self.bot.user.id})')
         await self.load_extensions()
         print(f'Loaded {len(self.bot.cogs)} cogs')
-        try:
-            synced = await self.bot.tree.sync()
-            print(f"Synced {len(synced)} commands")
-        except Exception as e:
-            print(f"Failed to sync commands: {e}")
+        #try:
+            #synced = await self.bot.tree.sync()
+            #print(f"Synced {len(synced)} commands")
+        #except Exception as e:
+            #print(f"Failed to sync commands: {e}")
 
-        #guild = self.bot.guilds[0]
-        #member = guild.get_member(int('786525018740883456'))
-        #await member.send("Hello, I am a bot")
-        #await member.kick(reason="Testing")
-
-        self.read_event.set()
+        self.ready_event.set()
 
     async def on_message(self, message):
         if message.author == self.bot.user:

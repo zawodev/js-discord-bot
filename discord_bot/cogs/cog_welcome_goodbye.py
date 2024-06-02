@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from utils.settings import load_setting
+from utils.saving_loading_json import load_setting_json
 
 def format_message(message, name):
     return message.replace('{name}', name)
@@ -12,18 +12,20 @@ class WelcomeGoodbye(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        channel_name = load_setting('CHANNEL_NAME')
+        settings = load_setting_json('welcome_goodbye_settings')
+        channel_name = settings['channel_name']
         channel = discord.utils.get(member.guild.text_channels, name=channel_name)
         if channel:
-            message = format_message(load_setting('WELCOME_MESSAGE'), member.mention)
+            message = format_message(settings['welcome_message'], member.mention)
             await channel.send(message)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        channel_name = load_setting('CHANNEL_NAME')
+        settings = load_setting_json('welcome_goodbye_settings')
+        channel_name = settings['channel_name']
         channel = discord.utils.get(member.guild.text_channels, name=channel_name)
         if channel:
-            message = format_message(load_setting('GOODBYE_MESSAGE'), member.mention)
+            message = format_message(settings['goodbye_message'], member.mention)
             await channel.send(message)
 
 async def setup(bot):

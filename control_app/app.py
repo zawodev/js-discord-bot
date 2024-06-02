@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from control_app.control_panel import BotControlPanel
+from PyQt5.QtGui import QIcon
 
 def load_stylesheet(stylesheet_path):
     try:
@@ -13,7 +14,7 @@ def load_stylesheet(stylesheet_path):
 class BotControlApp(QApplication):
     def __init__(self, sys_argv, bot):
         super().__init__(sys_argv)
-        # self.bot = bot
+        self.setWindowIcon(QIcon("control_app/icon.png"))
         self.setStyleSheet(load_stylesheet("control_app/style.css"))
         self.panel = BotControlPanel(bot)
 

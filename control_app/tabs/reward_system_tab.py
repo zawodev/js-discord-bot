@@ -1,9 +1,9 @@
 import asyncio
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, QDialog, QHeaderView
 from PyQt5.QtCore import Qt
-from PyQt5.QtCore import pyqtSignal, QObject
 
 from control_app.change_points_dialog import ChangePointsDialog
+from utils.saving_loading_json import load_setting_json, save_setting_json
 
 class RewardSystemTab(QWidget):
     def __init__(self, bot):
@@ -12,7 +12,6 @@ class RewardSystemTab(QWidget):
         self.guild_users = {}  # dictionary to store user data
         self.user_fetcher = bot.get_cog('UserFetcher')
         self.reward_system = bot.get_cog('RewardSystem')
-        # self.reward_system.user_modified.connect(self.display_users)
 
         # layout
         self.layout = QVBoxLayout(self)
@@ -34,7 +33,7 @@ class RewardSystemTab(QWidget):
         self.handle_fetch_click()
 
     def handle_fetch_click(self):
-        self.guild_users = asyncio.run(self.user_fetcher.fetch_users())
+        self.guild_users = load_setting_json('user_data') # field for is user in guild now
         self.display_users()
 
     def display_users(self):
@@ -42,10 +41,10 @@ class RewardSystemTab(QWidget):
         sorted_users = sorted(self.guild_users.items(), key=lambda x: x[1].get('behaviour_points', 0), reverse=True)
 
         for row, (user_id, user_info) in enumerate(sorted_users):
-            self.table.setRowHeight(row, 40)  # Adjusted row height
+            self.table.setRowHeight(row, 40)
 
             # username
-            self.table.setItem(row, 0, QTableWidgetItem(f"{user_info.get('username')} ({user_id})"))
+            self.table.setItem(row, 0, QTableWidgetItem(f"{user_info.get('name')} ({user_id})"))
 
             # behavioural points
             behaviour_points = QTableWidgetItem(f"{user_info.get('behaviour_points', 0):.2f}")
@@ -62,7 +61,7 @@ class RewardSystemTab(QWidget):
             change_values_button.clicked.connect(lambda _, uid=user_id: self.change_points_dialog(uid))
             self.table.setCellWidget(row, 3, change_values_button)
 
-        self.table.setSortingEnabled(True)  # Enable sorting after filling the table
+        self.table.setSortingEnabled(True)  # enable sorting after filling the table
 
     def change_points_dialog(self, user_id):
         dialog = ChangePointsDialog(self)
