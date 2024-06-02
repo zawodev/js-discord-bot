@@ -28,7 +28,7 @@ class UserModeratorTab(QWidget):
         self.layout.addWidget(self.scroll_area)
 
         # fetch button always at the bottom
-        self.fetch_button = QPushButton("Fetch Users")
+        self.fetch_button = QPushButton("Refresh Users")
         self.fetch_button.setStyleSheet("position: absolute; bottom: 10px;")
         self.fetch_button.clicked.connect(self.handle_fetch_click)
         self.layout.addWidget(self.fetch_button, alignment=Qt.AlignBottom)

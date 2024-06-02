@@ -20,9 +20,6 @@ class StatisticsTab(QWidget):
         load_channel_report_button = QPushButton("Load Channel Report")
         load_channel_report_button.clicked.connect(self.load_channel_report)
 
-        generate_report_button = QPushButton("Generate Report")
-        generate_report_button.clicked.connect(self.generate_report)
-
         # layout
         self.main_layout = QVBoxLayout()
 
@@ -32,7 +29,6 @@ class StatisticsTab(QWidget):
         # lower part for the buttons
         self.button_layout = QHBoxLayout()
         self.button_layout.addWidget(load_user_report_button)
-        self.button_layout.addWidget(generate_report_button)
         self.button_layout.addWidget(load_channel_report_button)
 
         self.main_layout.addLayout(self.chart_layout)
@@ -42,13 +38,6 @@ class StatisticsTab(QWidget):
 
         # load the user report at the start
         self.load_channel_report()
-
-    def generate_report(self):
-        if self.statistics_cog:
-            try:
-                self.bot.loop.create_task(self.statistics_cog.collect_data())
-            except Exception as e:
-                print(f"Error collecting data: {e}")
 
     def load_user_report(self):
         user_data = load_setting_json("user_data")

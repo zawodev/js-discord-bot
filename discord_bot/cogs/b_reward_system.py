@@ -50,7 +50,7 @@ class RewardSystem(commands.Cog):
         await ctx.send(f'{user.mention} has been punished with {points} behaviour points.')
 
     def modify_user(self, user_id, data):
-        user_data = self.users_data.get(user_id, {})
+        user_data = self.users_data.get(str(user_id), {})
         user_data['behaviour_points'] = max(min(user_data['behaviour_points'] + data.get('behaviour_points', 0), 1000),
                                             -1000)
         user_data['reward_points'] = max(min(user_data['reward_points'] + data.get('reward_points', 0), 1000), -1000)

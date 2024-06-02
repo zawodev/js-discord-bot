@@ -1,45 +1,45 @@
 {
     "video_info": {
         "kind": "youtube#searchResult",
-        "etag": "BDpK8zOlrO6lnG0rzs8a15TbG1o",
+        "etag": "ne79IG6j_7KYxrF6nIP-eJCenT8",
         "id": {
             "kind": "youtube#video",
-            "videoId": "MesBw3gF6Vs"
+            "videoId": "MS1QT6Rig6I"
         },
         "snippet": {
-            "publishedAt": "2024-05-31T15:42:42Z",
-            "channelId": "UCSju5G2aFaWMqn-_0YBtq5A",
-            "title": "New 7-direction pencil model discovered!",
-            "description": "Find out more about Jane Street's programmes running across the world: https://bit.ly/sum-janestreet-programs Including the WiSE ...",
+            "publishedAt": "2024-05-31T04:45:05Z",
+            "channelId": "UCfM3zsQsOnfWNUppiycmBuw",
+            "title": "#HOUDINI 🎩 out now!",
+            "description": "http://eminem.lnk.to/Houdini #thedeathofslimshady thx Steve Miller Band !!! http://eminem.com http://facebook.com/eminem ...",
             "thumbnails": {
                 "default": {
-                    "url": "https://i.ytimg.com/vi/MesBw3gF6Vs/default.jpg",
+                    "url": "https://i.ytimg.com/vi/MS1QT6Rig6I/default.jpg",
                     "width": 120,
                     "height": 90
                 },
                 "medium": {
-                    "url": "https://i.ytimg.com/vi/MesBw3gF6Vs/mqdefault.jpg",
+                    "url": "https://i.ytimg.com/vi/MS1QT6Rig6I/mqdefault.jpg",
                     "width": 320,
                     "height": 180
                 },
                 "high": {
-                    "url": "https://i.ytimg.com/vi/MesBw3gF6Vs/hqdefault.jpg",
+                    "url": "https://i.ytimg.com/vi/MS1QT6Rig6I/hqdefault.jpg",
                     "width": 480,
                     "height": 360
                 }
             },
-            "channelTitle": "Stand-up Maths",
+            "channelTitle": "EminemMusic",
             "liveBroadcastContent": "none",
-            "publishTime": "2024-05-31T15:42:42Z"
+            "publishTime": "2024-05-31T04:45:05Z"
         }
     },
     "channel_stats": {
         "1246611743061573702": {
-            "messages_count": 0,
+            "messages_count": 1,
             "name": "announcements"
         },
         "1246611630540849225": {
-            "messages_count": 42,
+            "messages_count": 49,
             "name": "general"
         },
         "1246611870077550644": {
@@ -56,48 +56,49 @@
         "check_for_links": "true"
     },
     "api_integration_settings": {
-        "youtube_channel_name_or_url": "standupmaths",
+        "youtube_channel_name_or_url": "EminemMusic",
         "discord_channel_name": "announcements",
         "notification_message": "niesamowity film od {author}! {link}"
     },
     "banned_words": [
         "jaskier",
         "ryba",
-        "michałeks"
+        "michałeks",
+        "dfssd"
     ],
     "user_data": {
         "336921078138011650": {
-            "behaviour_points": 5.699999999999999,
-            "reward_points": 0.5600000000000003,
-            "messages_count": 33,
+            "behaviour_points": 456.97,
+            "reward_points": 12.849999999999996,
+            "messages_count": 36,
             "name": "zawodev",
             "avatar_url": "https://cdn.discordapp.com/avatars/336921078138011650/8a76e9c7a9e87081dfebcb3cbc3c977b.png?size=1024"
         },
         "771493221447630910": {
-            "behaviour_points": 0,
-            "reward_points": 0,
+            "behaviour_points": 240.07999999999996,
+            "reward_points": 15.0,
             "messages_count": 5,
             "name": "nicnicjajo",
             "avatar_url": "https://cdn.discordapp.com/avatars/771493221447630910/6880c38542bb0f8da0c25799670b9fff.png?size=1024"
         },
         "786525018740883456": {
-            "behaviour_points": 0,
-            "reward_points": 0,
+            "behaviour_points": -197.12,
+            "reward_points": 14.959999999999999,
             "messages_count": 1,
             "name": "szymonkularski",
             "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
         },
         "787438558159962142": {
-            "behaviour_points": 0,
-            "reward_points": 0,
+            "behaviour_points": 319.22999999999996,
+            "reward_points": 12.219999999999997,
             "messages_count": 1,
             "name": "jazzbot#8270",
             "avatar_url": "https://cdn.discordapp.com/avatars/787438558159962142/c54ace49d2fda2625e46fe872d00c912.png?size=1024"
         },
         "1238599711561093180": {
-            "behaviour_points": 0,
-            "reward_points": 0,
-            "messages_count": 4,
+            "behaviour_points": 206.55999999999997,
+            "reward_points": 16.65,
+            "messages_count": 8,
             "name": "jsbot-tempname#1299",
             "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024"
         }
