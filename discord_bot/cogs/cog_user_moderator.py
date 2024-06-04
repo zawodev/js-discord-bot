@@ -4,6 +4,8 @@ from discord.ext import commands
 from discord import app_commands
 import datetime
 
+from utils.saving_loading_json import load_setting_json, save_setting_json
+
 class UserModerator(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -16,7 +18,8 @@ class UserModerator(commands.Cog):
         print(f"banning user {user_id}")
         user = self.guild.get_member(int(user_id))
         self.reward_system.modify_user(int(user.id), {
-            'behaviour_points': -105.07,
+            'is_on_server': False,
+            'behaviour_points': load_setting_json('punishment_settings')['ban'],
             'reward_points': 0
         })
         if user:
@@ -37,8 +40,9 @@ class UserModerator(commands.Cog):
     async def kick_user(self, user_id, reason):
         print(f"kicking user {user_id}")
         user = self.guild.get_member(int(user_id))
-        self.reward_system.modify_user(int(user.id), {
-            'behaviour_points': -65.13,
+        self.reward_system.modify_user(int(user_id), {
+            'is_on_server': False,
+            'behaviour_points': load_setting_json('punishment_settings')['kick'],
             'reward_points': 0
         })
         if user:
@@ -60,7 +64,7 @@ class UserModerator(commands.Cog):
         print(f"timing out user {user_id}")
         user = self.guild.get_member(int(user_id))
         self.reward_system.modify_user(int(user.id), {
-            'behaviour_points': -31.55,
+            'behaviour_points': load_setting_json('punishment_settings')['timeout'],
             'reward_points': 0
         })
         if user:

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QTextEdit, QLineEdit
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QTextEdit, QLineEdit, QMessageBox
 from utils.saving_loading_json import load_setting_json, save_setting_json
 
 class WelcomeGoodbyeTab(QWidget):
@@ -58,3 +58,4 @@ class WelcomeGoodbyeTab(QWidget):
             'welcome_message': welcome_msg,
             'goodbye_message': goodbye_msg
         })
+        QMessageBox.information(self, "Success", "Welcome and Goodbye messages saved successfully!")

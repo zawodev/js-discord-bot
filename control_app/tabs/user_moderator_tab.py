@@ -1,21 +1,39 @@
 import asyncio
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QScrollArea, QHBoxLayout, QInputDialog, QDialog
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QScrollArea, QHBoxLayout, QInputDialog, QDialog, QLineEdit, QDoubleSpinBox, QMessageBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
 import requests
 
 from control_app.timeout_dialog import TimeoutDialog
 from utils.url_to_pixmap import url_to_pixmap
-from utils.saving_loading_json import load_setting_json
+from utils.saving_loading_json import load_setting_json, save_setting_json
 
 
 class UserModeratorTab(QWidget):
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
-        self.guild_users = {}  # dictionary to store user data
+        self.user_data = {}  # dictionary to store user data
         self.moderator = bot.get_cog('UserModerator')
-        self.user_fetcher = bot.get_cog('UserFetcher')
+
+        self.punishments = {'ban': 0, 'kick': 0, 'timeout': 0}
+        self.load_punishment_settings()
+
+        # edit ban, kick, timeout penalty
+        edit_penalty_layout = QHBoxLayout()
+        labels = ['Ban Penalty', 'Kick Penalty', 'Timeout Penalty']
+        self.spinboxes = []
+        for idx, label in enumerate(labels):
+            spinbox = QDoubleSpinBox()
+            spinbox.setValue(round(self.punishments[list(self.punishments)[idx]], 2))
+            spinbox.setDecimals(2)
+            spinbox.setSingleStep(0.01)
+            spinbox.setMaximum(999.99)
+            spinbox.setMinimum(-999.99)
+            self.spinboxes.append(spinbox)
+            edit_penalty_layout.addWidget(QLabel(label))
+            edit_penalty_layout.addWidget(spinbox)
+
 
         # layout
         self.layout = QVBoxLayout()
@@ -26,19 +44,43 @@ class UserModeratorTab(QWidget):
         self.scroll_layout = QVBoxLayout(self.scroll_content)
         self.scroll_area.setWidget(self.scroll_content)
         self.layout.addWidget(self.scroll_area)
+        self.layout.addLayout(edit_penalty_layout)
 
-        # fetch button always at the bottom
+
+        # fetch butto0ns always at the bottom
         self.fetch_button = QPushButton("Refresh Users")
         self.fetch_button.setStyleSheet("position: absolute; bottom: 10px;")
         self.fetch_button.clicked.connect(self.handle_fetch_click)
         self.layout.addWidget(self.fetch_button, alignment=Qt.AlignBottom)
 
+        self.save_punishment_btn = QPushButton("Save Punishment")
+        self.save_punishment_btn.clicked.connect(self.save_punishment_settings)
+        self.layout.addWidget(self.save_punishment_btn, alignment=Qt.AlignBottom)
+
         self.handle_fetch_click()
         self.setLayout(self.layout)
 
     # ------------------------------------ button click handlers ------------------------------------
+
+    def load_punishment_settings(self):
+        try:
+            punishment_settings = load_setting_json('punishment_settings') or {'ban': 0, 'kick': 0, 'timeout': 0}
+            self.punishments = {key: value for key, value in punishment_settings.items()}
+        except Exception as e:
+            print(f"Error loading punishment settings: {e}")
+
+    def save_punishment_settings(self):
+        try:
+            for idx, key in enumerate(self.punishments):
+                self.punishments[key] = self.spinboxes[idx].value()
+            save_setting_json('punishment_settings', self.punishments)
+            QMessageBox.information(self, "Success", "User punishment settings saved successfully!")
+        except Exception as e:
+            print(f"Error saving punishment settings: {e}")
+
+    # ------------------------------------ button click handlers ------------------------------------
     def handle_fetch_click(self):
-        self.guild_users = load_setting_json('user_data')
+        self.user_data = load_setting_json('user_data')
         self.display_users()
 
     def handle_ban_click(self, user_id):
@@ -85,7 +127,7 @@ class UserModeratorTab(QWidget):
                             sub_widget.deleteLater()
 
         # display each user in the layout
-        for user_id, user_info in self.guild_users.items():
+        for user_id, user_info in self.user_data.items():
             user_layout = QHBoxLayout()
 
             # avatar
@@ -107,18 +149,24 @@ class UserModeratorTab(QWidget):
             ban_button = QPushButton("Ban")
             ban_button.setFixedWidth(75)
             ban_button.clicked.connect(lambda _, uid=user_id: self.handle_ban_click(uid))
+            if not user_info.get('is_on_server'):
+                ban_button.setEnabled(False)
             user_layout.addWidget(ban_button)
 
             # kick button
             kick_button = QPushButton("Kick")
             kick_button.setFixedWidth(75)
             kick_button.clicked.connect(lambda _, uid=user_id: self.handle_kick_click(uid))
+            if not user_info.get('is_on_server'):
+                kick_button.setEnabled(False)
             user_layout.addWidget(kick_button)
 
             # timeout button
             timeout_button = QPushButton("Mute") # "Timeout" wouldn't fit on screen
             timeout_button.setFixedWidth(75)
             timeout_button.clicked.connect(lambda _, uid=user_id: self.handle_timeout_click(uid))
+            if not user_info.get('is_on_server'):
+                timeout_button.setEnabled(False)
             user_layout.addWidget(timeout_button)
 
             self.scroll_layout.addLayout(user_layout)

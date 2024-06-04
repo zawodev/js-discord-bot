@@ -1,16 +1,30 @@
-import asyncio
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, QDialog, QHeaderView
 from PyQt5.QtCore import Qt
 
 from control_app.change_points_dialog import ChangePointsDialog
 from utils.saving_loading_json import load_setting_json, save_setting_json
 
+from PyQt5.QtWidgets import QTableWidgetItem
+
+class QTableWidgetItemNumeric(QTableWidgetItem):
+    def __init__(self, value):
+        # format value to 2 decimal places for display
+        display_value = f"{value:.2f}"
+        super().__init__(display_value)
+        self.value = value
+
+    def __lt__(self, other):
+        if isinstance(other, QTableWidgetItemNumeric):
+            return self.value < other.value
+        return super().__lt__(other)
+
+
 class RewardSystemTab(QWidget):
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
-        self.guild_users = load_setting_json('user_data')
-        self.user_fetcher = bot.get_cog('UserFetcher')
+        self.user_data = load_setting_json('user_data')
+        #self.user_fetcher = bot.get_cog('UserFetcher')
         self.reward_system = bot.get_cog('RewardSystem')
 
         # layout
@@ -18,8 +32,8 @@ class RewardSystemTab(QWidget):
 
         # table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(4)  # Username, Behavioural Points, Reward Points, Actions
-        self.table.setHorizontalHeaderLabels(['Username', 'Behavioural Points', 'Reward Points', 'Actions'])
+        self.table.setColumnCount(6)  # Username, Messages Count, Is On Server, Behavioural Points, Reward Points, Actions
+        self.table.setHorizontalHeaderLabels(['Username', 'Messages Count', 'Is On Server', 'Behavioural Points', 'Reward Points', 'Actions'])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.setSortingEnabled(True)  # Enable sorting
 
@@ -33,50 +47,69 @@ class RewardSystemTab(QWidget):
         self.display_users()
 
     def handle_refresh_click(self):
-        self.guild_users = load_setting_json('user_data') # field for is user in guild now
-        self.update_users()
+        self.user_data = load_setting_json('user_data') # field for is user in guild now
+        try:
+            self.update_users()
+        except Exception as e:
+            print(f"Error updating users: {e}")
 
     def display_users(self):
-        self.table.setRowCount(len(self.guild_users))
+        self.table.setRowCount(len(self.user_data))
 
-        for row, (user_id, user_info) in enumerate(self.guild_users.items()):
+        for row, (user_id, user_info) in enumerate(self.user_data.items()):
             self.table.setRowHeight(row, 40)
 
             # username
             self.table.setItem(row, 0, QTableWidgetItem(f"{user_info.get('name')} ({user_id})"))
 
+            # messages count
+            messages_count = QTableWidgetItemNumeric(user_info.get('messages_count', 0))
+            messages_count.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.table.setItem(row, 1, messages_count)
+
+            # is on server
+            is_on_server = QTableWidgetItem("Yes" if user_info.get('is_on_server', False) else "No")
+            is_on_server.setTextAlignment(Qt.AlignCenter)
+            self.table.setItem(row, 2, is_on_server)
+
             # behavioural points
-            behaviour_points = QTableWidgetItem(f"{user_info.get('behaviour_points', 0):.2f}")
+            behaviour_points = QTableWidgetItemNumeric(user_info.get('behaviour_points', 0))
             behaviour_points.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-            self.table.setItem(row, 1, behaviour_points)
+            self.table.setItem(row, 3, behaviour_points)
 
             # reward points
-            reward_points = QTableWidgetItem(f"{user_info.get('reward_points', 0):.2f}")
+            reward_points = QTableWidgetItemNumeric(user_info.get('reward_points', 0))
             reward_points.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-            self.table.setItem(row, 2, reward_points)
+            self.table.setItem(row, 4, reward_points)
 
             # Single button for both changes
-            change_values_button = QPushButton(f"Modify: {user_info.get("name", "")}")
+            change_values_button = QPushButton(f"Modify")
             change_values_button.clicked.connect(lambda _, uid=user_id: self.change_points_dialog(uid))
-            self.table.setCellWidget(row, 3, change_values_button)
+            self.table.setCellWidget(row, 5, change_values_button)
 
     def update_users(self):
         # update the values in the existing table without recreating it
-        for row in range(self.table.rowCount()):
-            # get user_id from the username cell which contains (user_id)
-            username_item = self.table.item(row, 0)
-            user_id = username_item.text().split('(')[-1].split(')')[0]
+        self.table.setSortingEnabled(False)
+        for row, (user_id, user_info) in enumerate(self.user_data.items()):
+            # username
+            # self.table.item(row, 0).setText(f"{user_info.get('name')} ({user_id})")
 
-            if user_id in self.guild_users:
-                user_info = self.guild_users[user_id]
+            # get user id from table item column 0
+            og_user_id = self.table.item(row, 0).text().split(' ')[-1][1:-1]
 
-                # update behavioural points
-                behaviour_points = self.table.item(row, 1)
-                behaviour_points.setText(f"{user_info.get('behaviour_points', 0):.2f}")
+            # messages count
+            self.table.item(row, 1).setText(str(self.user_data[str(og_user_id)].get('messages_count', 0)))
 
-                # update reward points
-                reward_points = self.table.item(row, 2)
-                reward_points.setText(f"{user_info.get('reward_points', 0):.2f}")
+            # is on server
+            is_on_server = "Yes" if self.user_data[str(og_user_id)].get('is_on_server', False) else "No"
+            self.table.item(row, 2).setText(is_on_server)
+
+            # behavioural points
+            self.table.item(row, 3).setText(f"{self.user_data[str(og_user_id)].get('behaviour_points', 0):.2f}")
+
+            # reward points
+            self.table.item(row, 4).setText(f"{self.user_data[str(og_user_id)].get('reward_points', 0):.2f}")
+        self.table.setSortingEnabled(True)
 
     def change_points_dialog(self, user_id):
         dialog = ChangePointsDialog(self)

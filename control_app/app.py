@@ -14,8 +14,8 @@ def load_stylesheet(stylesheet_path):
 class BotControlApp(QApplication):
     def __init__(self, sys_argv, bot):
         super().__init__(sys_argv)
-        self.setWindowIcon(QIcon("control_app/icon.png"))
-        self.setStyleSheet(load_stylesheet("control_app/style.css"))
+        self.setWindowIcon(QIcon("control_app/graphics/icon.png"))
+        self.setStyleSheet(load_stylesheet("control_app/stylesheets/style.css"))
         self.panel = BotControlPanel(bot)
 
     def run(self):

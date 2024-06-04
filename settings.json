@@ -39,7 +39,7 @@
             "name": "announcements"
         },
         "1246611630540849225": {
-            "messages_count": 49,
+            "messages_count": 89,
             "name": "general"
         },
         "1246611870077550644": {
@@ -63,44 +63,53 @@
     "banned_words": [
         "jaskier",
         "ryba",
-        "michałeks",
-        "dfssd"
+        "michałek"
     ],
     "user_data": {
         "336921078138011650": {
-            "behaviour_points": 456.97,
-            "reward_points": 12.849999999999996,
-            "messages_count": 36,
+            "behaviour_points": 460.53000000000003,
+            "reward_points": 13.279999999999994,
+            "messages_count": 45,
             "name": "zawodev",
-            "avatar_url": "https://cdn.discordapp.com/avatars/336921078138011650/8a76e9c7a9e87081dfebcb3cbc3c977b.png?size=1024"
+            "avatar_url": "https://cdn.discordapp.com/avatars/336921078138011650/a_8a76e9c7a9e87081dfebcb3cbc3c977b.gif?size=1024",
+            "is_on_server": true
         },
         "771493221447630910": {
-            "behaviour_points": 240.07999999999996,
-            "reward_points": 15.0,
+            "behaviour_points": 40.079999999999956,
+            "reward_points": 5.02,
             "messages_count": 5,
             "name": "nicnicjajo",
-            "avatar_url": "https://cdn.discordapp.com/avatars/771493221447630910/6880c38542bb0f8da0c25799670b9fff.png?size=1024"
-        },
-        "786525018740883456": {
-            "behaviour_points": -197.12,
-            "reward_points": 14.959999999999999,
-            "messages_count": 1,
-            "name": "szymonkularski",
-            "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
+            "avatar_url": "https://cdn.discordapp.com/avatars/771493221447630910/6880c38542bb0f8da0c25799670b9fff.png?size=1024",
+            "is_on_server": true
         },
         "787438558159962142": {
             "behaviour_points": 319.22999999999996,
-            "reward_points": 12.219999999999997,
+            "reward_points": 12.239999999999997,
             "messages_count": 1,
-            "name": "jazzbot#8270",
-            "avatar_url": "https://cdn.discordapp.com/avatars/787438558159962142/c54ace49d2fda2625e46fe872d00c912.png?size=1024"
+            "name": "jazzbot",
+            "avatar_url": "https://cdn.discordapp.com/avatars/787438558159962142/c54ace49d2fda2625e46fe872d00c912.png?size=1024",
+            "is_on_server": true
         },
         "1238599711561093180": {
-            "behaviour_points": 206.55999999999997,
-            "reward_points": 16.65,
-            "messages_count": 8,
-            "name": "jsbot-tempname#1299",
-            "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024"
+            "behaviour_points": 255.0700000000001,
+            "reward_points": 21.540000000000006,
+            "messages_count": 25,
+            "name": "jsbot-tempname",
+            "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024",
+            "is_on_server": true
+        },
+        "786525018740883456": {
+            "is_on_server": true,
+            "messages_count": 16,
+            "behaviour_points": -34.89999999999999,
+            "reward_points": 0.0,
+            "name": "szymonkularski",
+            "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
         }
+    },
+    "punishment_settings": {
+        "ban": 50.04,
+        "kick": 30.2,
+        "timeout": 10.0
     }
 }

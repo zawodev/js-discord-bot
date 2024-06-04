@@ -1,7 +1,0 @@
-CHANNEL_NAME=general
-GOODBYE_MESSAGE=dowidzenia {name}
-WELCOME_MESSAGE=witaj {name}!
-check_for_links=false
-discord_channel_name=general
-notification_message=hedja @everyone
-youtube_channel_name_or_url=EminemMusic

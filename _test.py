@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 800, 600)
         # self.setFixedSize(800, 600)
 
-        self.background = QPixmap('control_app/background.jpg')
+        self.background = QPixmap('control_app/graphics/background.jpg')
 
         self.tab_widget = CustomTabWidget(self)
         self.tab_widget.addTab(WelcomeTab(), "Powitania i Pożegnania")
