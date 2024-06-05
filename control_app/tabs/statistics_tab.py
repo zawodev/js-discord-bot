@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QTextEdit, QGridLayout, QFormLayout, \
     QLineEdit
 from PyQt5.QtChart import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
-from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPainter, QLinearGradient
 import json
 from utils.saving_loading_json import load_setting_json, save_setting_json
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QPointF
 
 
 class StatisticsTab(QWidget):
@@ -41,7 +41,7 @@ class StatisticsTab(QWidget):
 
     def load_user_report(self):
         user_data = load_setting_json("user_data")
-        self.display_bar_chart(user_data, "User Activity", "User ID", "Messages Count")
+        self.display_bar_chart(user_data, "User Activity", "User Name", "Messages Count")
 
     def load_channel_report(self):
         channel_stats = load_setting_json("channel_stats")
@@ -56,7 +56,7 @@ class StatisticsTab(QWidget):
         sorted_data = sorted(data.items(), key=lambda item: item[1]["messages_count"], reverse=True)
 
         for key, value in sorted_data:
-            categories.append(str(key))
+            categories.append(value["name"])
             bar_set.append(value["messages_count"])
 
         series.append(bar_set)
@@ -68,12 +68,16 @@ class StatisticsTab(QWidget):
 
         axisX = QBarCategoryAxis()
         axisX.append(categories)
+        axisX.setTitleText(x_axis)
         chart.addAxis(axisX, Qt.AlignBottom)
         series.attachAxis(axisX)
 
         axisY = QValueAxis()
+        axisY.setTitleText(y_axis)
         chart.addAxis(axisY, Qt.AlignLeft)
         series.attachAxis(axisY)
+
+        axisY.applyNiceNumbers()
 
         chart_view = QChartView(chart)
         chart_view.setRenderHint(QPainter.Antialiasing)
@@ -85,3 +89,4 @@ class StatisticsTab(QWidget):
             old_chart.deleteLater()
 
         self.chart_layout.addWidget(chart_view)
+

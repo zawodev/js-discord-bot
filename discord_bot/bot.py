@@ -6,11 +6,13 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
+from utils.saving_loading_json import load_setting_json
+
 
 class DiscordBot:
-    def __init__(self, ready_event, command_prefix='/', intents=discord.Intents.all()):
+    def __init__(self, _ready_event, command_prefix='/', intents=discord.Intents.all()):
         load_dotenv()
-        self.ready_event = ready_event
+        self.ready_event = _ready_event
         self.bot = commands.Bot(command_prefix=command_prefix, intents=intents)
         self.bot.event(self.on_ready)
         self.bot.event(self.on_message)
@@ -36,8 +38,8 @@ class DiscordBot:
     async def on_message(self, message):
         if message.author == self.bot.user:
             return
-        # Process other messages if needed
-        # await self.bot.process_commands(message) # Uncomment if you want to process commands
+        # process other messages if needed
+        # await self.bot.process_commands(message) # uncomment if you want to process commands
 
     def get_bot(self):
         return self.bot
@@ -47,7 +49,11 @@ class DiscordBot:
         await ctx.response.send_message("success")
 
     def run(self):
-        self.bot.run(os.getenv("DISCORD_TOKEN"))
+        settings_token = load_setting_json("app_settings")['discord_api_key']
+        if len(settings_token) == 72:
+            self.bot.run(settings_token)
+        else:
+            self.bot.run(os.getenv("DISCORD_TOKEN"))
 
 
 # if this module is run directly, create and run the bot

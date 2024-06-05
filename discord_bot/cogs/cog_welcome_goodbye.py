@@ -2,9 +2,10 @@ import discord
 from discord.ext import commands
 from utils.saving_loading_json import load_setting_json, save_setting_json
 
-def format_message(message, name):
-    return message.replace('{name}', name)
-
+def format_message(message, changes):
+    for key, value in changes.items():
+        message = message.replace(key, value)
+    return message
 
 class WelcomeGoodbye(commands.Cog):
     def __init__(self, bot):
@@ -17,7 +18,11 @@ class WelcomeGoodbye(commands.Cog):
         channel_name = settings['channel_name']
         channel = discord.utils.get(member.guild.text_channels, name=channel_name)
         if channel:
-            message = format_message(settings['welcome_message'], member.mention)
+            changes = {
+                '{user_name}': member.mention,
+                '{guild_name}': member.guild.name
+            }
+            message = format_message(settings['welcome_message'], changes)
             if str(member.id) in user_data:
                 user_data[str(member.id)]['is_in_guild'] = True
             else:
@@ -34,7 +39,11 @@ class WelcomeGoodbye(commands.Cog):
         channel_name = settings['channel_name']
         channel = discord.utils.get(member.guild.text_channels, name=channel_name)
         if channel:
-            message = format_message(settings['goodbye_message'], member.mention)
+            changes = {
+                '{user_name}': member.mention,
+                '{guild_name}': member.guild.name
+            }
+            message = format_message(settings['goodbye_message'], changes)
             if str(member.id) in user_data:
                 user_data[str(member.id)]['is_in_guild'] = False
             else:

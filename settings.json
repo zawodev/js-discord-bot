@@ -49,8 +49,8 @@
     },
     "welcome_goodbye_settings": {
         "channel_name": "general",
-        "welcome_message": "witajta {name}",
-        "goodbye_message": "żegnaj {name}"
+        "welcome_message": "witaj na serwerze {guild_name} użytkowniku {user_name}!",
+        "goodbye_message": "żegnaj z serwera {guild_name} użytkowniku {user_name}!"
     },
     "banned_words_settings": {
         "check_for_links": "true"
@@ -63,13 +63,39 @@
     "banned_words": [
         "jaskier",
         "ryba",
-        "michałek"
+        "michałek",
+        "karaluch",
+        "świerk",
+        "krecik",
+        "skarpeta",
+        "klawiatura",
+        "klawiatury",
+        "program",
+        "C++",
+        "C#",
+        "html",
+        "jagodno",
+        "szczecin",
+        "czerwony",
+        "pałeczka",
+        "słomka",
+        "słoń",
+        "żyrafa",
+        "jajco",
+        "broda",
+        "okulary",
+        "szklanka",
+        "zupka",
+        "pomarańcze",
+        "literalnie",
+        "kwadraty",
+        "trójkąty"
     ],
     "user_data": {
         "336921078138011650": {
-            "behaviour_points": 460.53000000000003,
-            "reward_points": 13.279999999999994,
-            "messages_count": 45,
+            "behaviour_points": 432.03999999999996,
+            "reward_points": 13.659999999999993,
+            "messages_count": 47,
             "name": "zawodev",
             "avatar_url": "https://cdn.discordapp.com/avatars/336921078138011650/a_8a76e9c7a9e87081dfebcb3cbc3c977b.gif?size=1024",
             "is_on_server": true
@@ -91,9 +117,9 @@
             "is_on_server": true
         },
         "1238599711561093180": {
-            "behaviour_points": 255.0700000000001,
-            "reward_points": 21.540000000000006,
-            "messages_count": 25,
+            "behaviour_points": 286.17,
+            "reward_points": 24.650000000000006,
+            "messages_count": 32,
             "name": "jsbot-tempname",
             "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024",
             "is_on_server": true
@@ -101,15 +127,22 @@
         "786525018740883456": {
             "is_on_server": true,
             "messages_count": 16,
-            "behaviour_points": -34.89999999999999,
+            "behaviour_points": -24.849999999999994,
             "reward_points": 0.0,
             "name": "szymonkularski",
             "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
         }
     },
     "punishment_settings": {
-        "ban": 50.04,
-        "kick": 30.2,
-        "timeout": 10.0
+        "ban": 50.059999999999995,
+        "kick": 30.230000000000004,
+        "timeout": 10.049999999999999
+    },
+    "app_settings": {
+        "discord_guild_id": "1246611629781811255",
+        "discord_api_key": "tJoMTIasFc2XwsojasdSIOJAajso.4eome.joasfdojso0-jsdofoj3jaoj3jf98JF8ajfvFUo0",
+        "youtube_api_key": "iadSDB3IOJmA98abox3j7oJ3jf9SIOJdZ4oj3uAoj3jf98J",
+        "bot_start_message": "bot został uruchomiony skutecznie!",
+        "bot_logs_channel": "bot-logs"
     }
 }
