@@ -7,6 +7,7 @@ class FetchData(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.guild = bot.guilds[0]
+        self.logs_channel = load_setting_json("app_settings")["bot_logs_channel"]
 
     async def collect_data(self):
         # messages_data = {}
@@ -46,6 +47,8 @@ class FetchData(commands.Cog):
                     channel_data[channel.id]["messages_count"] += 1
         print(f"Collected data for {self.guild.name} channels.")
 
+        settings_cog = self.bot.get_cog('Settings')
+        self.bot.loop.create_task(settings_cog.send_log(self.logs_channel, f"Collected data for {self.guild.name} members and channels."))
         save_setting_json("user_data", user_data)
         save_setting_json("channel_stats", channel_data)
 

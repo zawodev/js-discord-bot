@@ -1,14 +1,22 @@
 import os
-
 import requests
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import re
 
-api_key = os.getenv("YOUTUBE_API_KEY")
+from utils.saving_loading_json import load_setting_json
+
+def get_api_key():
+    api_key = load_setting_json("app_settings")['youtube_api_key']
+    if len(api_key) != 48:
+        api_key = os.getenv("YOUTUBE_API_KEY")
+    return api_key
 
 def get_channel_id(channel_name):
     print("api key used")
+
+    api_key = get_api_key()
+
     try:
         youtube = build("youtube", "v3", developerKey=api_key)
 
@@ -38,13 +46,15 @@ def get_channel_id(channel_name):
 
 def get_video_info(channel_input: str) -> dict:
     print("api key used")
-    import re
-    # Extract channel ID from URL if a URL is provided
+
+    api_key = get_api_key()
+
+    # extract channel ID from URL if a URL is provided
     channel_url_pattern = r"https?://www\.youtube\.com/[@]([^/?]+)"
     match = re.search(channel_url_pattern, channel_input)
     if match:
         channel_id = match.group(1)
-        # Fetch channel ID using YouTube API if URL format is provided
+        # fetch channel ID using YouTube API if URL format is provided
         base_url = "https://www.googleapis.com/youtube/v3/channels"
         params = {
             "part": "id",
@@ -64,7 +74,7 @@ def get_video_info(channel_input: str) -> dict:
         channel_id = items[0]['id']
     else:
         channel_id = channel_input
-    # Proceed with fetching the latest video using the channel ID
+    # proceed with fetching the latest video using the channel ID
 
     base_url = "https://www.googleapis.com/youtube/v3/search"
     params = {
@@ -85,13 +95,13 @@ def get_video_info(channel_input: str) -> dict:
     items = data.get("items", [])
     if not items:
         raise ValueError("No videos found.")
-    # Returning all video information as requested
+    # returning all video information as requested
     # print(items[0])
     return items[0]
 
 def get_latest_video_info(channel_name):
     return get_video_info(get_channel_id(channel_name))
 
-if __name__ == "__main__":
+if __name__ == "__main__": # main just for testing
     video_info = get_latest_video_info("standupmaths")
     print(video_info)

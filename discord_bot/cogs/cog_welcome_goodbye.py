@@ -2,10 +2,7 @@ import discord
 from discord.ext import commands
 from utils.saving_loading_json import load_setting_json, save_setting_json
 
-def format_message(message, changes):
-    for key, value in changes.items():
-        message = message.replace(key, value)
-    return message
+from utils.format_message import format_message
 
 class WelcomeGoodbye(commands.Cog):
     def __init__(self, bot):

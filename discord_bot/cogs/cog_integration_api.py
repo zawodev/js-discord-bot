@@ -1,11 +1,9 @@
-import json
-
 import discord
 from discord.ext import commands, tasks
-
 from utils.saving_loading_json import load_setting_json, save_setting_json
-
 import utils.youtube_api_handler as yt_api
+
+from utils.format_message import format_message
 
 class ExternalAPI(commands.Cog):
     def __init__(self, bot):
@@ -35,7 +33,11 @@ class ExternalAPI(commands.Cog):
     async def send_notification(self):
         channel = discord.utils.get(self.guild.text_channels, name=self.discord_channel_name)
         if channel:
-            message = f'{self.notification_message} {self.video_url}'
+            changes = {
+                '{author}': self.video_info['snippet']['channelTitle'],
+                '{title}': self.video_info['snippet']['title']
+            }
+            message = f'{format_message(self.notification_message, changes)} {self.video_url}'
             await channel.send(message)
 
     def check_for_new_video(self):

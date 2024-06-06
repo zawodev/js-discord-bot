@@ -1,50 +1,54 @@
 {
     "video_info": {
         "kind": "youtube#searchResult",
-        "etag": "ne79IG6j_7KYxrF6nIP-eJCenT8",
+        "etag": "LJ3-reJ6vlpaei7kNksiP-wSCeA",
         "id": {
             "kind": "youtube#video",
-            "videoId": "MS1QT6Rig6I"
+            "videoId": "daVny9y72UE"
         },
         "snippet": {
-            "publishedAt": "2024-05-31T04:45:05Z",
-            "channelId": "UCfM3zsQsOnfWNUppiycmBuw",
-            "title": "#HOUDINI 🎩 out now!",
-            "description": "http://eminem.lnk.to/Houdini #thedeathofslimshady thx Steve Miller Band !!! http://eminem.com http://facebook.com/eminem ...",
+            "publishedAt": "2024-06-05T15:54:57Z",
+            "channelId": "UCSju5G2aFaWMqn-_0YBtq5A",
+            "title": "The shape that should be impossible.",
+            "description": "Get your Sydler-shape limited-edition dust jacket now! https://mathsgear.co.uk/products/love-triangle-by-matt-parker-signed Here ...",
             "thumbnails": {
                 "default": {
-                    "url": "https://i.ytimg.com/vi/MS1QT6Rig6I/default.jpg",
+                    "url": "https://i.ytimg.com/vi/daVny9y72UE/default.jpg",
                     "width": 120,
                     "height": 90
                 },
                 "medium": {
-                    "url": "https://i.ytimg.com/vi/MS1QT6Rig6I/mqdefault.jpg",
+                    "url": "https://i.ytimg.com/vi/daVny9y72UE/mqdefault.jpg",
                     "width": 320,
                     "height": 180
                 },
                 "high": {
-                    "url": "https://i.ytimg.com/vi/MS1QT6Rig6I/hqdefault.jpg",
+                    "url": "https://i.ytimg.com/vi/daVny9y72UE/hqdefault.jpg",
                     "width": 480,
                     "height": 360
                 }
             },
-            "channelTitle": "EminemMusic",
+            "channelTitle": "Stand-up Maths",
             "liveBroadcastContent": "none",
-            "publishTime": "2024-05-31T04:45:05Z"
+            "publishTime": "2024-06-05T15:54:57Z"
         }
     },
     "channel_stats": {
         "1246611743061573702": {
-            "messages_count": 1,
+            "messages_count": 2,
             "name": "announcements"
         },
         "1246611630540849225": {
-            "messages_count": 89,
+            "messages_count": 93,
             "name": "general"
         },
         "1246611870077550644": {
             "messages_count": 2,
             "name": "another-channel"
+        },
+        "1247664874214129664": {
+            "messages_count": 14,
+            "name": "bot-logs"
         }
     },
     "welcome_goodbye_settings": {
@@ -56,9 +60,9 @@
         "check_for_links": "true"
     },
     "api_integration_settings": {
-        "youtube_channel_name_or_url": "EminemMusic",
+        "youtube_channel_name_or_url": "standupmaths",
         "discord_channel_name": "announcements",
-        "notification_message": "niesamowity film od {author}! {link}"
+        "notification_message": "świetny nowy film pojawił się na kanale {author}-a! Zobacz już teraz: {title}! -"
     },
     "banned_words": [
         "jaskier",
@@ -93,8 +97,8 @@
     ],
     "user_data": {
         "336921078138011650": {
-            "behaviour_points": 432.03999999999996,
-            "reward_points": 13.659999999999993,
+            "behaviour_points": 407.21999999999997,
+            "reward_points": 13.729999999999993,
             "messages_count": 47,
             "name": "zawodev",
             "avatar_url": "https://cdn.discordapp.com/avatars/336921078138011650/a_8a76e9c7a9e87081dfebcb3cbc3c977b.gif?size=1024",
@@ -117,18 +121,18 @@
             "is_on_server": true
         },
         "1238599711561093180": {
-            "behaviour_points": 286.17,
-            "reward_points": 24.650000000000006,
-            "messages_count": 32,
+            "behaviour_points": 356.0699999999998,
+            "reward_points": 31.640000000000004,
+            "messages_count": 45,
             "name": "jsbot-tempname",
             "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024",
             "is_on_server": true
         },
         "786525018740883456": {
-            "is_on_server": true,
-            "messages_count": 16,
-            "behaviour_points": -24.849999999999994,
-            "reward_points": 0.0,
+            "is_on_server": false,
+            "messages_count": 80,
+            "behaviour_points": -24.839999999999993,
+            "reward_points": 2.009999999999991,
             "name": "szymonkularski",
             "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
         }
