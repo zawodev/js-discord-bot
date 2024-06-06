@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 from PyQt5.QtCore import pyqtSignal, QObject
 import json
 import os
@@ -30,26 +31,38 @@ class RewardSystem(commands.Cog):
             'reward_points': behaviour_points * 0.1
         })
 
-    @commands.command(name="points", description="Check user points")
-    async def points(self, ctx):
-        user_data = self.user_data.get(str(ctx.author.id), {})
-        behaviour_points = user_data.get('behaviour_points', 0)
-        reward_points = user_data.get('reward_points', 0)
-        await ctx.send(
-            f'{ctx.author.mention} has {behaviour_points:.2f} behaviour points and {reward_points:.2f} reward points.')
+    @app_commands.command(name="stan_konta", description="Wyświetl stan konta")
+    async def stan_konta(self, interaction: discord.Interaction):
+        self.user_data = load_setting_json('user_data')
+        user_points = self.user_data.get(str(interaction.user.id), {}).get('reward_points', 0)
+        await interaction.response.send_message(f"Stan Twojego konta: {user_points} punktów")
 
-    @commands.command(name="punish", description="Punish a user")
-    @commands.has_permissions(administrator=True)
-    async def punish(self, ctx, user: discord.Member, points: int):
-        user_id = str(user.id)
-        user_data = self.user_data.get(user_id, {})
-        if user_data:
-            user_data['behaviour_points'] = user_data['behaviour_points'] - points
-            self.user_data[user_id] = user_data
-            save_setting_json('user_data', self.user_data)
+    async def buy_role(self, interaction: discord.Interaction, role_name: str, cost: int):
+        self.user_data = load_setting_json('user_data')
+        user_points = self.user_data.get(str(interaction.user.id), {}).get('reward_points', 0)
+        role = discord.utils.get(interaction.guild.roles, name=role_name)
+        if role:
+            if user_points >= cost:
+                self.user_data[str(interaction.user.id)]['reward_points'] -= cost
+                save_setting_json('user_data', self.user_data)
+                await interaction.user.add_roles(role)
+                await interaction.response.send_message(f"Dodano rolę {role_name}!")
+            else:
+                await interaction.response.send_message("Nie masz wystarczająco punktów!")
         else:
-            print(f"User {user_id} not found.")
-        await ctx.send(f'{user.mention} has been punished with {points} behaviour points.')
+            await interaction.response.send_message(f"Rola {role_name} nie istnieje!")
+
+    @app_commands.command(name="buy10", description="Kup rolę 10$")
+    async def buy10(self, interaction: discord.Interaction):
+        await self.buy_role(interaction, "10$", 10)
+
+    @app_commands.command(name="buy20", description="Kup rolę 20$")
+    async def buy20(self, interaction: discord.Interaction):
+        await self.buy_role(interaction, "20$", 20)
+
+    @app_commands.command(name="buy50", description="Kup rolę 50$")
+    async def buy50(self, interaction: discord.Interaction):
+        await self.buy_role(interaction, "50$", 50)
 
     def modify_user(self, user_id, data):
         user_id = str(user_id)
