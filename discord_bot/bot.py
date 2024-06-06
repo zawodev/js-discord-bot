@@ -16,7 +16,7 @@ class DiscordBot:
         self.bot = commands.Bot(command_prefix=command_prefix, intents=intents)
         self.bot.event(self.on_ready)
         self.bot.event(self.on_message)
-        self.bot.tree.command(name="test")(self.test)
+        # self.bot.tree.command(name="test")(self.test)
 
     async def load_extensions(self):
         for filename in os.listdir('discord_bot/cogs'):
@@ -27,11 +27,11 @@ class DiscordBot:
         print(f'Logged in as {self.bot.user.name} ({self.bot.user.id})')
         await self.load_extensions()
         print(f'Loaded {len(self.bot.cogs)} cogs')
-        #try:
-            #synced = await self.bot.tree.sync()
-            #print(f"Synced {len(synced)} commands")
-        #except Exception as e:
-            #print(f"Failed to sync commands: {e}")
+        try:
+            synced = await self.bot.tree.sync()
+            print(f"Synced {len(synced)} commands")
+        except Exception as e:
+            print(f"Failed to sync commands: {e}")
 
         self.ready_event.set()
 
@@ -44,16 +44,11 @@ class DiscordBot:
     def get_bot(self):
         return self.bot
 
-    @app_commands.describe(custom_argument="put argument description here")
-    async def test(self, ctx: discord.Interaction, custom_argument: str):
-        await ctx.response.send_message("success")
-
     def run(self):
-        settings_token = load_setting_json("app_settings")['discord_api_key']
-        if len(settings_token) == 72:
-            self.bot.run(settings_token)
-        else:
-            self.bot.run(os.getenv("DISCORD_TOKEN"))
+        token = os.getenv("DISCORD_TOKEN")
+        if token is None:
+            token = load_setting_json("app_settings")['discord_api_key']
+        self.bot.run(token)
 
 
 # if this module is run directly, create and run the bot

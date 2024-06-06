@@ -1,36 +1,36 @@
 {
     "video_info": {
         "kind": "youtube#searchResult",
-        "etag": "LJ3-reJ6vlpaei7kNksiP-wSCeA",
+        "etag": "sPLMQglUj1b-CdELCfL4lPk5zeU",
         "id": {
             "kind": "youtube#video",
-            "videoId": "daVny9y72UE"
+            "videoId": "ki1uRq8CDsM"
         },
         "snippet": {
-            "publishedAt": "2024-06-05T15:54:57Z",
-            "channelId": "UCSju5G2aFaWMqn-_0YBtq5A",
-            "title": "The shape that should be impossible.",
-            "description": "Get your Sydler-shape limited-edition dust jacket now! https://mathsgear.co.uk/products/love-triangle-by-matt-parker-signed Here ...",
+            "publishedAt": "2024-06-03T21:44:15Z",
+            "channelId": "UCfM3zsQsOnfWNUppiycmBuw",
+            "title": "Step thru the portal… Houdini video out now 🪄🎩",
+            "description": "http://eminem.com http://facebook.com/eminem http://twitter.com/eminem http://instagram.com/eminem http://shadyrecords.com ...",
             "thumbnails": {
                 "default": {
-                    "url": "https://i.ytimg.com/vi/daVny9y72UE/default.jpg",
+                    "url": "https://i.ytimg.com/vi/ki1uRq8CDsM/default.jpg",
                     "width": 120,
                     "height": 90
                 },
                 "medium": {
-                    "url": "https://i.ytimg.com/vi/daVny9y72UE/mqdefault.jpg",
+                    "url": "https://i.ytimg.com/vi/ki1uRq8CDsM/mqdefault.jpg",
                     "width": 320,
                     "height": 180
                 },
                 "high": {
-                    "url": "https://i.ytimg.com/vi/daVny9y72UE/hqdefault.jpg",
+                    "url": "https://i.ytimg.com/vi/ki1uRq8CDsM/hqdefault.jpg",
                     "width": 480,
                     "height": 360
                 }
             },
-            "channelTitle": "Stand-up Maths",
+            "channelTitle": "EminemMusic",
             "liveBroadcastContent": "none",
-            "publishTime": "2024-06-05T15:54:57Z"
+            "publishTime": "2024-06-03T21:44:15Z"
         }
     },
     "channel_stats": {
@@ -53,14 +53,14 @@
     },
     "welcome_goodbye_settings": {
         "channel_name": "general",
-        "welcome_message": "witaj na serwerze {guild_name} użytkowniku {user_name}!",
-        "goodbye_message": "żegnaj z serwera {guild_name} użytkowniku {user_name}!"
+        "welcome_message": "witaj na serwerze {guild_name} użytkowniku {user_mention}!",
+        "goodbye_message": "żegnaj z serwera {guild_name} użytkowniku {user_mention}!"
     },
     "banned_words_settings": {
         "check_for_links": "true"
     },
     "api_integration_settings": {
-        "youtube_channel_name_or_url": "standupmaths",
+        "youtube_channel_name_or_url": "EminemMusic",
         "discord_channel_name": "announcements",
         "notification_message": "świetny nowy film pojawił się na kanale {author}-a! Zobacz już teraz: {title}! -"
     },
@@ -121,17 +121,17 @@
             "is_on_server": true
         },
         "1238599711561093180": {
-            "behaviour_points": 356.0699999999998,
-            "reward_points": 31.640000000000004,
-            "messages_count": 45,
+            "behaviour_points": 584.5699999999995,
+            "reward_points": 54.49000000000005,
+            "messages_count": 72,
             "name": "jsbot-tempname",
             "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024",
             "is_on_server": true
         },
         "786525018740883456": {
-            "is_on_server": false,
-            "messages_count": 80,
-            "behaviour_points": -24.839999999999993,
+            "is_on_server": true,
+            "messages_count": 82,
+            "behaviour_points": 5.390000000000011,
             "reward_points": 2.009999999999991,
             "name": "szymonkularski",
             "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
@@ -148,5 +148,17 @@
         "youtube_api_key": "iadSDB3IOJmA98abox3j7oJ3jf9SIOJdZ4oj3uAoj3jf98J",
         "bot_start_message": "bot został uruchomiony skutecznie!",
         "bot_logs_channel": "bot-logs"
+    },
+    "rock_paper_scissors": {
+        "786525018740883456": {
+            "wins": 1,
+            "losses": 0,
+            "ties": 0
+        },
+        "336921078138011650": {
+            "wins": 3,
+            "losses": 5,
+            "ties": 4
+        }
     }
 }

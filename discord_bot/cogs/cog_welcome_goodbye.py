@@ -16,7 +16,7 @@ class WelcomeGoodbye(commands.Cog):
         channel = discord.utils.get(member.guild.text_channels, name=channel_name)
         if channel:
             changes = {
-                '{user_name}': member.mention,
+                '{user_mention}': member.mention,
                 '{guild_name}': member.guild.name
             }
             message = format_message(settings['welcome_message'], changes)
@@ -37,7 +37,7 @@ class WelcomeGoodbye(commands.Cog):
         channel = discord.utils.get(member.guild.text_channels, name=channel_name)
         if channel:
             changes = {
-                '{user_name}': member.mention,
+                '{user_mention}': member.mention,
                 '{guild_name}': member.guild.name
             }
             message = format_message(settings['goodbye_message'], changes)

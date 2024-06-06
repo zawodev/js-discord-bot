@@ -53,7 +53,7 @@ class ApiIntegrationTab(QWidget):
         self.url_input = QLineEdit()
         self.discord_channel_label = QLabel("Discord Channel Name:")
         self.discord_channel_input = QLineEdit()
-        self.notification_label = QLabel("Notification Message:")
+        self.notification_label = QLabel("Notification Message: {author} {title}")
         self.notification_input = QTextEdit()
 
         inputs_layout.addWidget(self.url_label)

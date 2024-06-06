@@ -7,9 +7,9 @@ import re
 from utils.saving_loading_json import load_setting_json
 
 def get_api_key():
-    api_key = load_setting_json("app_settings")['youtube_api_key']
-    if len(api_key) != 48:
-        api_key = os.getenv("YOUTUBE_API_KEY")
+    api_key = os.getenv("YOUTUBE_API_KEY")
+    if api_key is None:
+        api_key = load_setting_json("app_settings")['youtube_api_key']
     return api_key
 
 def get_channel_id(channel_name):

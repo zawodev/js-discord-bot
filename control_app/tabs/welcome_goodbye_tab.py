@@ -11,7 +11,7 @@ class WelcomeGoodbyeTab(QWidget):
         self.channel_name.setPlaceholderText("Enter the channel name")
 
         # welcome
-        welcome_label = QLabel("Welcome Message: [{guild_name} = guild name, {user_name} = user mention]")
+        welcome_label = QLabel("Welcome Message: {guild_name} {user_mention}")
         self.welcome_message = QTextEdit()
         self.welcome_message.setPlaceholderText("Enter the welcome message")
 
