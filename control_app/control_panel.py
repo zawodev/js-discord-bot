@@ -11,22 +11,28 @@ from control_app.tabs.settings_tab import SettingsTab
 
 class BotControlPanel(QWidget):
     def __init__(self, bot):
+        """
+        Initialize the main control panel widget for a Discord bot.
+
+        :param bot: The bot instance to control and interact with through the GUI.
+        """
         super().__init__()
 
-        # window settings
-        self.setWindowTitle('Discord Bot Control Panel')
-        self.setGeometry(100, 100, 800, 600)
+        # set window properties
+        self.setWindowTitle('Discord Bot Control Panel')  # set the window title
+        self.setGeometry(100, 100, 800, 600)  # set the window position and size
 
-        # background
-        background = QPixmap('control_app/graphics/background.jpg')
-        self.setAutoFillBackground(True)
-        palette = self.palette()
-        palette.setBrush(QPalette.Window, QBrush(background))
-        self.setPalette(palette)
+        # set up the background with a custom image
+        background = QPixmap('control_app/graphics/background.jpg')  # load the background image
+        self.setAutoFillBackground(True)  # enable background autofill for the widget
+        palette = self.palette()  # get the widget's current palette
+        palette.setBrush(QPalette.Window, QBrush(background))  # set the window's background brush
+        self.setPalette(palette)  # apply the updated palette
 
-        # tab widgets
-        self.tabs = QTabWidget()
-        self.tabs.setMovable(True)
+        # initialize and configure the tab widget
+        self.tabs = QTabWidget()  # create a tab widget
+        self.tabs.setMovable(True)  # allow tabs to be repositioned by the user
+        # add tabs for various bot control functions
         self.tabs.addTab(WelcomeGoodbyeTab(), "Welcome/Goodbye")
         self.tabs.addTab(BannedWordsTab(), "Banned Words")
         self.tabs.addTab(UserModeratorTab(bot=bot), "User Moderation")
@@ -35,9 +41,9 @@ class BotControlPanel(QWidget):
         self.tabs.addTab(StatisticsTab(bot=bot), "Statistics")
         self.tabs.addTab(SettingsTab(bot=bot), "Settings")
 
-        # layout
+        # set up the main layout for the widget
         layout = QVBoxLayout()
-        layout.addWidget(self.tabs)
-        self.setLayout(layout)
+        layout.addWidget(self.tabs)  # add the tab widget to the layout
+        self.setLayout(layout)  # set the widget's layout
 
-        self.show()
+        self.show()  # display the widget

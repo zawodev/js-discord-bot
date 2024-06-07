@@ -38,4 +38,7 @@ class Settings(commands.Cog):
                 await channel.send(message)
 
 async def setup(bot):
+    """
+    Standard asynchronous setup function to add this cog to a bot instance.
+    """
     await bot.add_cog(Settings(bot))

@@ -7,7 +7,17 @@ import humanize
 
 
 class ApiIntegrationTab(QWidget):
+    """
+    A QWidget subclass that provides an interface for integrating with an external API
+    to fetch and display video information from a YouTube channel, and manage settings related to this integration.
+    """
+
     def __init__(self, bot=None):
+        """
+        Initializes the ApiIntegrationTab widget.
+
+        :param bot: The bot instance, used to get the 'ExternalAPI' cog.
+        """
         super().__init__()
         self.bot = bot
         self.external_api = bot.get_cog('ExternalAPI')
@@ -83,6 +93,9 @@ class ApiIntegrationTab(QWidget):
         self.setLayout(main_layout)
 
     def load_settings(self):
+        """
+        Loads settings from a JSON file and populates the UI elements with the loaded values.
+        """
         try:
             settings = load_setting_json('api_integration_settings')
             self.url_input.setText(settings['youtube_channel_name_or_url'])
@@ -92,6 +105,9 @@ class ApiIntegrationTab(QWidget):
             print(f'Failed to load settings: {e}')
 
     def save_settings(self):
+        """
+        Saves the current settings to a JSON file and updates the external API settings.
+        """
         youtube_url = self.url_input.text()
         discord_channel = self.discord_channel_input.text()
         notification_message = self.notification_input.toPlainText()
@@ -107,12 +123,17 @@ class ApiIntegrationTab(QWidget):
         QMessageBox.information(self, "Success", "Settings saved successfully.")
 
     def check_for_new_video(self):
+        """
+        Checks the external API for new video information and updates the UI with the new data.
+        """
         self.external_api.check_for_new_video()
         self.video_info = self.external_api.video_info
         self.update_video_info()
 
     def update_video_info(self):
-        # Update UI with video info
+        """
+        Updates the UI with the latest video information fetched from the external API.
+        """
         if self.video_info:
             snippet = self.video_info['snippet']
             self.title_label.setText(f"Title: {snippet['title']}")
@@ -133,7 +154,12 @@ class ApiIntegrationTab(QWidget):
             self.thumbnail_label.clear()
 
     def time_since(self, published_at):
-        # Calculate the time since the video was published
+        """
+        Calculates the time since the video was published and returns a human-readable string.
+
+        :param published_at: The ISO 8601 formatted date-time string of when the video was published.
+        :returns: A human-readable string representing the time since the video was published.
+        """
         published_at_datetime = datetime.fromisoformat(published_at.replace('Z', '+00:00')).replace(tzinfo=timezone.utc)
         now = datetime.now(timezone.utc)
         delta = now - published_at_datetime

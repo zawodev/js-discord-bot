@@ -2,7 +2,18 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QTextEdit
 from utils.saving_loading_json import load_setting_json, save_setting_json
 
 class SettingsTab(QWidget):
+    """
+    A QWidget subclass that provides a settings interface for the bot.
+
+    :param bot: The bot instance to interact with the bot's functionalities.
+    """
+
     def __init__(self, bot):
+        """
+        Initializes the SettingsTab widget.
+
+        :param bot: The bot instance to interact with the bot's functionalities.
+        """
         super().__init__()
         self.bot = bot
         self.settings_cog = bot.get_cog("Settings")
@@ -60,6 +71,9 @@ class SettingsTab(QWidget):
         self.setLayout(layout)
 
     def save_settings(self):
+        """
+        Saves the current settings to a JSON file and shows a confirmation message.
+        """
         save_setting_json("app_settings", {
             "discord_guild_id": self.discord_guild_id_input.text(),
             "discord_api_key": self.discord_api_key_input.text(),
@@ -70,6 +84,9 @@ class SettingsTab(QWidget):
         QMessageBox.information(self, "Success", "Settings saved successfully.")
 
     def load_settings(self):
+        """
+        Loads settings from a JSON file and populates the input fields with the loaded values.
+        """
         settings = load_setting_json("app_settings")
         self.discord_guild_id_input.setText(settings.get("discord_guild_id", ""))
         self.discord_api_key_input.setText(settings.get("discord_api_key", ""))
@@ -78,6 +95,11 @@ class SettingsTab(QWidget):
         self.bot_logs_input.setText(settings.get("bot_logs_channel", ""))
 
     def fetch_data(self):
+        """
+        Starts the data fetching process and shows a confirmation message.
+
+        If an error occurs, prints the error message.
+        """
         try:
             self.bot.loop.create_task(self.fetch_cog.collect_data())
             QMessageBox.information(self, "Success", "Data started downloading. This may take a while.")

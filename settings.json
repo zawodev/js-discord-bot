@@ -35,19 +35,19 @@
     },
     "channel_stats": {
         "1246611743061573702": {
-            "messages_count": 2,
+            "messages_count": 10,
             "name": "announcements"
         },
         "1246611630540849225": {
-            "messages_count": 93,
+            "messages_count": 110,
             "name": "general"
         },
         "1246611870077550644": {
-            "messages_count": 2,
+            "messages_count": 5,
             "name": "another-channel"
         },
         "1247664874214129664": {
-            "messages_count": 14,
+            "messages_count": 49,
             "name": "bot-logs"
         }
     },
@@ -121,9 +121,9 @@
             "is_on_server": true
         },
         "1238599711561093180": {
-            "behaviour_points": 600.5699999999995,
-            "reward_points": 56.09000000000006,
-            "messages_count": 77,
+            "behaviour_points": 630.0699999999994,
+            "reward_points": 59.040000000000084,
+            "messages_count": 85,
             "name": "jsbot-tempname",
             "avatar_url": "https://cdn.discordapp.com/avatars/1238599711561093180/d752ffb88c10ba48d0f49540addbce26.png?size=1024",
             "is_on_server": true
@@ -132,7 +132,7 @@
             "is_on_server": true,
             "messages_count": 82,
             "behaviour_points": 5.390000000000011,
-            "reward_points": 2.009999999999991,
+            "reward_points": 1.999999999999991,
             "name": "szymonkularski",
             "avatar_url": "https://cdn.discordapp.com/avatars/786525018740883456/aea6705a9ed6c87615ddeff8b01abfd2.png?size=1024"
         }

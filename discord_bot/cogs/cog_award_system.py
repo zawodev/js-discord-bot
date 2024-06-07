@@ -13,17 +13,26 @@ class RewardSystem(commands.Cog):
     # user_modified = pyqtSignal()
 
     def __init__(self, bot):
+        """
+        Initialize the RewardSystem with the bot instance.
+        Loads user data from JSON storage.
+        """
         self.bot = bot
-        self.user_data = load_setting_json('user_data')
+        self.user_data = load_setting_json('user_data')  # load user data from JSON file
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        """
+        Triggered whenever a message is sent in any channel the bot has access to.
+        Ignores messages sent by bots.
+        """
         # if message.author.bot:
-        # return
+        #     return
 
         user_id = str(message.author.id)
+        behaviour_points = len(message.content) * 0.1  # calculate behavior points based on message length
 
-        behaviour_points = len(message.content) * 0.1
+        # Update user data with the message details and calculated points
         self.modify_user(user_id, {
             'is_on_server': True,
             'messages_count': 1,
@@ -33,19 +42,25 @@ class RewardSystem(commands.Cog):
 
     @app_commands.command(name="stan_konta", description="Wyświetl stan konta")
     async def stan_konta(self, interaction: discord.Interaction):
+        """
+        Slash command to display the user's reward points balance.
+        """
         self.user_data = load_setting_json('user_data')
         user_points = self.user_data.get(str(interaction.user.id), {}).get('reward_points', 0)
         await interaction.response.send_message(f"Stan Twojego konta: {user_points} punktów")
 
     async def buy_role(self, interaction: discord.Interaction, role_name: str, cost: int):
-        self.user_data = load_setting_json('user_data')
+        """
+        Allows users to buy a role using their reward points.
+        """
+        self.user_data = load_setting_json('user_data')  # reload user data to ensure it's up to date
         user_points = self.user_data.get(str(interaction.user.id), {}).get('reward_points', 0)
-        role = discord.utils.get(interaction.guild.roles, name=role_name)
+        role = discord.utils.get(interaction.guild.roles, name=role_name) # fetch the role by name
         if role:
             if user_points >= cost:
-                self.user_data[str(interaction.user.id)]['reward_points'] -= cost
-                save_setting_json('user_data', self.user_data)
-                await interaction.user.add_roles(role)
+                self.user_data[str(interaction.user.id)]['reward_points'] -= cost  # deduct the cost
+                save_setting_json('user_data', self.user_data) # save updated user data
+                await interaction.user.add_roles(role) # assign the role to the user
                 await interaction.response.send_message(f"Dodano rolę {role_name}!")
             else:
                 await interaction.response.send_message("Nie masz wystarczająco punktów!")
@@ -54,17 +69,29 @@ class RewardSystem(commands.Cog):
 
     @app_commands.command(name="buy10", description="Kup rolę 10$")
     async def buy10(self, interaction: discord.Interaction):
+        """
+        Slash command to buy a role priced at 10 points.
+        """
         await self.buy_role(interaction, "10$", 10)
 
     @app_commands.command(name="buy20", description="Kup rolę 20$")
     async def buy20(self, interaction: discord.Interaction):
+        """
+        Slash command to buy a role priced at 20 points.
+        """
         await self.buy_role(interaction, "20$", 20)
 
     @app_commands.command(name="buy50", description="Kup rolę 50$")
     async def buy50(self, interaction: discord.Interaction):
+        """
+        Slash command to buy a role priced at 50 points.
+        """
         await self.buy_role(interaction, "50$", 50)
 
     def modify_user(self, user_id, data):
+        """
+        Update or create user data in storage.
+        """
         user_id = str(user_id)
         if user_id not in self.user_data:
             self.user_data[user_id] = data
@@ -82,4 +109,7 @@ class RewardSystem(commands.Cog):
 
 
 async def setup(bot):
+    """
+    Asynchronous setup function to add this cog to a bot instance.
+    """
     await bot.add_cog(RewardSystem(bot))

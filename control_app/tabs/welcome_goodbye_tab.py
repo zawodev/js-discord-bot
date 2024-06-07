@@ -2,32 +2,39 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel, QTextEdit
 from utils.saving_loading_json import load_setting_json, save_setting_json
 
 class WelcomeGoodbyeTab(QWidget):
+    """
+    A QWidget subclass that provides an interface for setting welcome and goodbye messages.
+    """
+
     def __init__(self):
+        """
+        Initializes the WelcomeGoodbyeTab widget.
+        """
         super().__init__()
 
-        # channel name
+        # Channel name
         channel_name_label = QLabel("Channel Name:")
         self.channel_name = QLineEdit()
         self.channel_name.setPlaceholderText("Enter the channel name")
 
-        # welcome
+        # Welcome message
         welcome_label = QLabel("Welcome Message: {guild_name} {user_mention}")
         self.welcome_message = QTextEdit()
         self.welcome_message.setPlaceholderText("Enter the welcome message")
 
-        # farewell
+        # Goodbye message
         goodbye_label = QLabel("Goodbye Message:")
         self.goodbye_message = QTextEdit()
         self.goodbye_message.setPlaceholderText("Enter the goodbye message")
 
-        # load initial settings
+        # Load initial settings
         self.load_settings()
 
-        # save button
+        # Save button
         save_button = QPushButton("Save Messages")
         save_button.clicked.connect(self.save_welcome_farewell_messages)
 
-        # layout
+        # Layout
         layout = QVBoxLayout()
         layout.addWidget(channel_name_label)
         layout.addWidget(self.channel_name)
@@ -40,6 +47,11 @@ class WelcomeGoodbyeTab(QWidget):
         self.setLayout(layout)
 
     def load_settings(self):
+        """
+        Loads the settings from a JSON file and updates the fields.
+
+        :raises Exception: If there is an error loading the settings.
+        """
         try:
             settings = load_setting_json('welcome_goodbye_settings')
             self.channel_name.setText(settings['channel_name'])
@@ -49,6 +61,9 @@ class WelcomeGoodbyeTab(QWidget):
             print(f'Failed to load settings: {e}')
 
     def save_welcome_farewell_messages(self):
+        """
+        Saves the current welcome and goodbye messages to a JSON file and shows a success message.
+        """
         channel_name = self.channel_name.text()
         welcome_msg = self.welcome_message.toPlainText()
         goodbye_msg = self.goodbye_message.toPlainText()
