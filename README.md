@@ -4,10 +4,12 @@ A Discord bot developed in Python using the `discord.py` library. This bot provi
 
 ## Features
 
-- **Moderation Commands**: Kick, ban, mute commands for server management.
-- **Fun Commands**: Engage users with features like random jokes, rolling dice, and more.
-- **Customizable**: Easily add new commands or modify existing ones.
-- **Event Handlers**: React to different server events (e.g., new member joins).
+- **Welcome and Goodbye Messages**: Greets new members and sends a farewell message when they leave the server.
+- **YouTube Notifications**: Sends notifications to the server when new videos are uploaded to a specific YouTube channel using the YouTube API.
+- **Banned Words Enforcement**: Automatically times out users who use banned words in messages.
+- **Reward and Penalty System**: Tracks user karma and assigns rewards or penalties based on behavior. Users with low karma may face punishments.
+- **Server Statistics**: Displays various server statistics, such as total members, active users, and more.
+- **User Moderation**: Provides moderation tools for kicking, banning, and managing users based on behavior.
 
 ## Requirements
 
@@ -47,34 +49,28 @@ A Discord bot developed in Python using the `discord.py` library. This bot provi
    DISCORD_TOKEN=your_bot_token_here
    ```
 
-### Running the Bot
+### Running the Application
 
-To start the bot, simply run:
+To start the app, simply run:
 ```bash
-python bot.py
+python main.py
 ```
 
 ## Usage
 
-Once the bot is running, it can respond to various commands such as:
+Here’s an overview of the key functionalities your bot provides:
 
-- `!ping`: Responds with "Pong!"
-- `!kick @user`: Kicks a user from the server.
-- `!ban @user`: Bans a user from the server.
-- `!roll [number]`: Rolls a dice with the specified number of sides.
+- **Welcome/Goodbye Messages**: The bot will automatically send a welcome message when a new user joins and a goodbye message when they leave the server.
+  
+- **YouTube Notifications**: The bot will monitor a YouTube channel and post a notification to a designated channel when new videos are uploaded.
 
-You can add more commands by editing the `cogs` directory.
+- **Banned Words Enforcement**: The bot tracks a list of banned words, and if any user sends a message containing them, they will be temporarily timed out.
 
-## Contributing
+- **Reward System**: Each user has a karma score, and based on their behavior, they can gain or lose points. Negative karma may result in punishments like mutes or bans, while positive behavior is rewarded.
 
-Contributions are welcome! If you would like to contribute, please follow these steps:
+- **Server Statistics**: The bot can display stats about server usage, such as the number of active users, total members, and message counts.
 
-1. Fork this repository.
-2. Create a new branch (`git checkout -b feature/my-feature`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Add my feature'`).
-5. Push to the branch (`git push origin feature/my-feature`).
-6. Open a pull request.
+- **Moderation Tools**: Allows moderators to manage users with commands such as `kick`, `ban`, and `mute`.
 
 ## License
 
